@@ -1,30 +1,25 @@
 "use client";
 
 import { useChat } from "ai/react";
-import UserIcon from "./components/icons/UserIcon";
-import OpenAiIcon from "./components/icons/OpenAiIcon";
-import PaperAirplaneIcon from "./components/icons/PaperAirplaneIcon";
+import UserIcon from "../components/icons/UserIcon";
+import OpenAiIcon from "../components/icons/OpenAiIcon";
+import PaperAirplaneIcon from "../components/icons/PaperAirplaneIcon";
+import ChatBubble from "../components/ChatBubble";
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
-    <div className="flex flex-col w-full gap-10 py-24">
-      <div className="flex-grow flex flex-col gap-3">
+    <div className="flex flex-col w-full py-24">
+      <div className="flex flex-col gap-3 w-full mx-auto">
         {messages.length > 0
-          ? messages.map((m) => {
+          ? messages.map((message) => {
               const additionalStyles =
-                m.role === "user" ? "bg-neutral-200" : "";
+                message.role === "user" ? "justify-end" : "justify-start";
 
               return (
-                <div
-                  key={m.id}
-                  className={`whitespace-pre-wrap flex gap-2 p-4 ${additionalStyles}`}
-                >
-                  <div className="min-w-6">
-                    {m.role === "user" ? <UserIcon /> : <OpenAiIcon />}
-                  </div>
-                  {m.content}
+                <div className={`flex w-full px-5 ${additionalStyles}`}>
+                  <ChatBubble content={message.content} sender={message.role} />
                 </div>
               );
             })
